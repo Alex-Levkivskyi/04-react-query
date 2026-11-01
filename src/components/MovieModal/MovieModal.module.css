@@ -4,41 +4,70 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.75);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 1000;
 }
 
 .modal {
-  background-color: #222;
-  color: #fff;
-  padding: 24px;
-  border-radius: 8px;
-  max-width: 500px;
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border-radius: 12px;
+  max-width: 650px;
   width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
   position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
 .closeButton {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.6);
   border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backdropImage {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.content {
+  padding: 20px;
 }
 
 .title {
   margin-top: 0;
   margin-bottom: 12px;
+  font-size: 24px;
+}
+
+.info {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #bbb;
 }
 
 .overview {
-  font-size: 14px;
-  line-height: 1.5;
-  color: #ccc;
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #ddd;
 }

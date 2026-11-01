@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { ComponentType } from "react";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import ReactPaginateModule from "react-paginate";
@@ -12,6 +12,7 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import css from "./App.module.css";
 import type { Movie } from "../../types/movie";
+import toast, { Toaster } from "react-hot-toast";
 
 type ModuleWithDefault<T> = { default: T };
 
@@ -26,12 +27,18 @@ const App = () => {
   const [page, setPage] = useState<number>(1);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError, isSuccess, error } = useQuery({
     queryKey: ["movies", query, page],
     queryFn: () => fetchMovies(query, page),
     enabled: Boolean(query.trim()),
     placeholderData: keepPreviousData,
   });
+
+  useEffect(() => {
+    if (isSuccess && data?.results.length === 0) {
+      toast.error("No movies found for your request.");
+    }
+  }, [isSuccess, data]);
 
   const handleSearch = (newQuery: string) => {
     if (newQuery === query) return;
@@ -44,6 +51,7 @@ const App = () => {
 
   return (
     <div className={css.container}>
+      <Toaster position="top-right" />
       <header className={css.header}>
         <span>Powered by TMDB</span>
         <SearchBar onSubmit={handleSearch} />
