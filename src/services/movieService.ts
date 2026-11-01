@@ -9,8 +9,7 @@ export interface MoviesHttpResponse {
 }
 
 const BASE_URL = "https://api.themoviedb.org/3";
-const TMBD_TOKEN =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ODliZTMyYzQxNGUzMjkwODQwNzcxZDRiZDZjY2IxMCIsIm5iZiI6MTc5MjkwOTE1MC4zNDUsInN1YiI6IjZhZGQ5ZjVlNTBiMGM0OTU0MGQ4MjIzZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.l-Dw-eW2pRduOwrxeCTPF-Jv_SR4tC0OSQ9PKznXt6c";
+const TMDB_TOKEN = import.meta.env.VITE_TMDB_TOKEN;
 
 export const fetchMovies = async (
   query: string,
@@ -26,7 +25,7 @@ export const fetchMovies = async (
         language: "en-US",
       },
       headers: {
-        Authorization: `Bearer ${TMBD_TOKEN}`,
+        Authorization: `Bearer ${TMDB_TOKEN}`,
       },
     }
   );
