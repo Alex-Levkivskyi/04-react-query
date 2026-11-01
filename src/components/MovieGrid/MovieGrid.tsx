@@ -1,16 +1,17 @@
 import type { Movie } from "../../types/movie";
 import MovieCard from "../MovieCard/MovieCard";
-import css from "./MovieList.module.css";
+import css from "./MovieGrid.module.css";
 
-interface MovieListProps {
+interface MovieGridProps {
   movies: Movie[];
+  onSelect: (movie: Movie) => void;
 }
 
-const MovieList = ({ movies }: MovieListProps) => {
+const MovieGrid = ({ movies, onSelect }: MovieGridProps) => {
   return (
     <ul className={css.list}>
       {movies.map((movie) => (
-        <li key={movie.id}>
+        <li key={movie.id} onClick={() => onSelect(movie)}>
           <MovieCard movie={movie} />
         </li>
       ))}
@@ -18,4 +19,4 @@ const MovieList = ({ movies }: MovieListProps) => {
   );
 };
 
-export default MovieList;
+export default MovieGrid;

@@ -6,10 +6,12 @@ import type { ReactPaginateProps } from "react-paginate";
 
 import { fetchMovies } from "../../services/movie-api";
 import SearchBar from "../SearchBar/SearchBar";
-import MovieList from "../MovieList/MovieList";
+import MovieGrid from "../MovieGrid/MovieGrid";
+import MovieModal from "../MovieModal/MovieModal";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import css from "./App.module.css";
+import type { Movie } from "../../types/movie";
 
 type ModuleWithDefault<T> = { default: T };
 
@@ -22,6 +24,7 @@ const ReactPaginate = (
 const App = () => {
   const [query, setQuery] = useState<string>("");
   const [page, setPage] = useState<number>(1);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["movies", query, page],
@@ -63,7 +66,17 @@ const App = () => {
       {isLoading && <Loader />}
       {isError && <ErrorMessage message={(error as Error).message} />}
       {!isLoading && !isError && movies.length > 0 && (
-        <MovieList movies={movies} />
+        <MovieGrid
+          movies={movies}
+          onSelect={(movie) => setSelectedMovie(movie)}
+        />
+      )}
+
+      {selectedMovie && (
+        <MovieModal
+          movie={selectedMovie}
+          onClose={() => setSelectedMovie(null)}
+        />
       )}
     </div>
   );
